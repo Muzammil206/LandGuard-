@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl'; 
-import Header from '../auth/nav';
+// import Header from '../auth/nav';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibXV6YW1pbDIwNiIsImEiOiJjbGN5eXh2cW0wc2lnM290ZzJsZnNlbmxsIn0.o2Obvl7E_nQefSN34XsFmw';
 
@@ -106,8 +106,14 @@ map.current.on('mouseenter', 'polygonsLayers', () => {
   map.current.on('click', 'polygonsLayer', (e) => {
     new mapboxgl.Popup()
     .setLngLat(e.lngLat)
-    .setHTML(`<h2><span class="math-inline"> ${e.features[0].properties.NAME
-      } 'Feature'\}</h2\><p\></span>{feature.properties.description || ''}</p>`)
+    .setHTML(`<div> NAME: ${e.features[0].properties.NAME}</div> 
+     <div> LOCATION :  <p> ${e.features[0].properties.PLAN_LOCAT} </p> </div>   
+     <div> LOCAL GOV : <p>${e.features[0].properties.PLAN_LGA} </p> </div> 
+     <div> PLAN AREA : <p>${e.features[0].properties.PLAN_AREA} </p> </div> 
+     <div> PLAN ORIGIN : <p>${e.features[0].properties.PLAN_ORIGI} </p> </div> 
+     <div> PLAN NUMBER :  <p>${e.features[0].properties.PLAN_NUMBE} </p> </div> 
+     <div> SURVEYOR :   <p> ${e.features[0].properties.SURVEYOR} </p> </div> 
+    `)
     .addTo(map.current);
     });
 

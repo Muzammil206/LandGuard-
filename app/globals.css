@@ -1,19 +1,10 @@
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
+  @tailwind components;
+  @tailwind utilities;
+  
 
 
 
-
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .bg {
+    background-color: black;
   }
-}
-.map-container {
-  height: 100vh;
-  }
-   
- 
-
