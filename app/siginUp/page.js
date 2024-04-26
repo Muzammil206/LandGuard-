@@ -1,5 +1,5 @@
 import Header from './nav'
-import Hero from './hero'
+import Hero from '../../components/hero'
 import SignUpForm from './signup'
 
 function page() {

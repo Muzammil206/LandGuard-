@@ -18,7 +18,10 @@ module.exports = {
       },
     },
     extend: {
-     
+      backgroundImage: {
+        'hero-pattern': "url('https://images.pexels.com/photos/171328/pexels-photo-171328.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')",
+        'large': "url('https://img.freepik.com/free-vector/white-monochrome-background-paper-style_23-2148999903.jpg?w=740&t=st=1714047465~exp=1714048065~hmac=dd08e4b8d911940b8bf7e276869628691344702d722969e358f1514bf3634aa7')",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
