@@ -3,7 +3,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl'; 
-// import Header from '../auth/nav';
+import Header from '../siginUp/nav';
+
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibXV6YW1pbDIwNiIsImEiOiJjbGN5eXh2cW0wc2lnM290ZzJsZnNlbmxsIn0.o2Obvl7E_nQefSN34XsFmw';
 
@@ -132,8 +133,7 @@ map.current.on('mouseenter', 'polygonsLayers', () => {
       <div>
          <Header/>
       </div>
-      <div ref={mapContainer} className="map-container" />
+      <div ref={mapContainer} className="map-container  w-screen h-screen"  />
     </div>
   );
 }
-
