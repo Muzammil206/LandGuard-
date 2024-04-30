@@ -16,12 +16,12 @@ const Hero = () => {
     <div className="md:relative  max-w-[85rem]  md:mx-auto  md:px-8 lg:px-8   ">
 
     <div className="md:hidden absolute top-0 bg-hero-pattern h-screen w-screen bg-cover ">
-
+  
     </div>
     
     <div  className="hidden lg:flex  absolute  start-1/2 transform -translate-x-1/2">
       <div className="bg-gradient-to-r from-violet-300/50 to-purple-100 blur-3xl w-full h-full rotate-[-60deg] transform -translate-x-[10rem] dark:from-violet-900/50 dark:to-purple-900"></div>
-      <div className="bg-gradient-to-tl from-blue-100 via-blue-300 to-blue-50 blur-3xl w-[35rem] h-[25rem] rounded-fulls origin-top-left -rotate-12 -translate-x-[15rem] dark:from-indigo-900/70 dark:via-indigo-900/70 dark:to-blue-900/70"></div>
+      <div className="bg-gradient-to-tl from-blue-100 via-blue-400 to-blue-50 blur-3xl w-[35rem] h-[25rem] rounded-fulls origin-top-left -rotate-12 -translate-x-[15rem] dark:from-indigo-900/70 dark:via-indigo-900/70 dark:to-blue-900/70"></div>
     </div>
       {/* Grid */}
       <div className="  sm:justify-center grid absolute md:grid-cols-2 gap-8 md:gap-8 xl:gap-20 md:items-center mt-8">
