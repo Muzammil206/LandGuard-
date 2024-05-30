@@ -1,9 +1,9 @@
 'use client '
 import { useForm } from 'react-hook-form'
-import Image from 'next/image'
-import Mask from '@/public/new.jpg'
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
+import { useRouter } from 'next/router'
+import { signIn, useSession } from 'next-auth/react'
 import {
     Select,
     SelectContent,
@@ -19,9 +19,29 @@ import {
 function RigistrationForm() {
 
 
+
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = (data) => {
+
+
+        const onSubmit = async (data) => {
+            try {
+              const response = await fetch('/api/register', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+              });
+              const responseData = await response.json();
+              console.log(responseData, 'good');
+             
+            } catch (error) {
+              console.error('Error registering user:', error);
+              console.log('yeeeee Egbami hoooo');
+            }
+          };
       console.log(data);
     };
 
@@ -35,7 +55,7 @@ function RigistrationForm() {
       <div>
         <label htmlFor="email" className="block text-sm mb-1">Email address</label>
         <div className="relative">
-          <Input type="email" id="email" {...register("email", { required: true, pattern: /^[A-Za-z]+$/i  })} className="py-2 px-4 block w-full border-gray-400 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="email-error" />
+          <Input type="email" id="email" {...register("email", { required: true})}  className ="py-2 px-4 block w-full border-gray-400 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required aria-describedby="email-error" />
         </div>
         {errors.email && <p className="text-xs text-red-600 mt-2">Please include a valid email address so we can get back to you</p>}
       </div>
@@ -45,15 +65,15 @@ function RigistrationForm() {
      
       {/* End Form Groups */}
      
-      <Select >
+      {/* <Select >
      <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Are you a surveyor"    />
      </SelectTrigger>
-      <SelectContent {...register("Are you a surveyor")}>
+      <SelectContent >
          <SelectItem value="true">Yes</SelectItem>
          <SelectItem value="false">No</SelectItem>
       </SelectContent>
-      </Select>
+      </Select> */}
 
       {/* Checkbox */}
       <div className="flex items-center space-x-2">

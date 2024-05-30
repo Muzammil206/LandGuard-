@@ -20,7 +20,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className=" sm:absolute top-0 bg-hero-pattern h-screen w-screen bg-cover   md:md:w-full flex flex-col sm:flex-row relative md:bg-gradient-to-l from-gray-200 via-fuchsia-200 to-stone-100 ">
+    <div className=" sm:absolute top-0 bg-hero-pattern h-screen w-screen bg-cover   md:md:w-full flex flex-col sm:flex-row relative md:bg-gradient-to-l from-gray-200 via-fuchsia-20-stone-100 ">
       
     <div className='w-full  md:w-[40%] md:p-8 flex  pt-8 px-4'>
  

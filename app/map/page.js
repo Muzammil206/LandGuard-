@@ -22,7 +22,7 @@ export default function App() {
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v12',
+      style: 'mapbox://styles/mapbox/satellite-streets-v12',
       center: [lng, lat],
       zoom: zoom
     });
