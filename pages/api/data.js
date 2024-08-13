@@ -2,7 +2,7 @@ import query from '../../lib/db';
 
 export default async function handler(req, res) {
   try {
-    // Correct the SQL query to select all columns from the table
+    // orrect the SQL query to select all columns from the table
     const result = await query( 'SELECT ST_AsGeoJSON(geom) AS geojson FROM "combined_view"');
     
     // Respond with the fetched data
