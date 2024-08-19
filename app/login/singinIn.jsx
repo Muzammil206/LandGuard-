@@ -15,9 +15,27 @@ import Link from 'next/link'
 const SignIn = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  
+
+  const onSubmit = async (data) => {
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+      alert('Logged in successfully');
+    } catch (error) {
+      alert(error.message);
+    }
   };
+  
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      alert('Logged in with Google');
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
 
   return (
     <div className=" sm:absolute top-0 bg-hero-pattern h-screen w-screen bg-cover   md:md:w-full flex flex-col sm:flex-row relative md:bg-gradient-to-l from-gray-200 via-fuchsia-20-stone-100 ">
@@ -39,7 +57,7 @@ const SignIn = () => {
 
           <div className="mt-5">
 
-            <GoogleBtn/>
+            <GoogleBtn  onClick={handleGoogleSignIn}/>
                 
 
             <div className="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6">Or</div>
