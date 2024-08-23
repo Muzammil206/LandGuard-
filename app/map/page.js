@@ -48,18 +48,20 @@ export default function App() {
 
 
 
-
-
-
-
     const fetchGeoJSON = async () => {
-      // const response = await fetch('http://localhost:8080/geoserver/cadastral/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cadastral%3Apolygon%20table&maxFeatures=50&outputFormat=application%2Fjson');
+      // const response = await fetch('http://localhost:3000/api/data');
       
       // const data = await response.json();
       // setData(data);
       // console.log(data[0])
+
       
+        const response = await fetch('http://localhost:3000/api/data'); // Replace with your endpoint
+        const data = await response.json();
     
+        // Transform the data into GeoJSON FeatureCollection
+        
+      
 
     
     
@@ -69,7 +71,7 @@ export default function App() {
       // Create an empty source to hold all features
       const source = map.current.addSource('allFeaturesSource', {
         type: 'geojson',
-        data: 'http://localhost:8080/geoserver/cadastral/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cadastral%3Acombined_view&maxFeatures=50&outputFormat=application%2Fjson',
+        data: data
       });
        
       
@@ -136,15 +138,7 @@ export default function App() {
 
 // Change the cursor to a pointer when
 // the mouse is over the states layer.
-map.current.on('mouseenter', 'polygonsLayers', () => {
-  map.current.getCanvas().style.cursor = 'pointer';
-  });
-   
-  // Change the cursor back to a pointer
-  // when it leaves the states layer.
-  map.current.on('mouseleave', 'polygonsLayer', () => {
-  map.current.getCanvas().style.cursor = '';
-  });
+
 
   map.current.on('click', 'polygonsLayer', (e) => {
     new mapboxgl.Popup()
@@ -168,7 +162,7 @@ map.current.on('mouseenter', 'polygonsLayers', () => {
 
     });
 
-    }
+ }
     fetchGeoJSON();
 
     map.current.addControl(new mapboxgl.NavigationControl(), "top-left");
@@ -190,7 +184,7 @@ map.current.on('mouseenter', 'polygonsLayers', () => {
         polygon: true,
         trash: true
       },
-      defaultMode: 'draw_polygon'
+      // defaultMode: 'draw_polygon'
     });
     map.current.addControl(draw);
 
@@ -227,7 +221,7 @@ map.current.on('mouseenter', 'polygonsLayers', () => {
         if (!map.current.getSource('example-source')) {
           map.current.addSource('example-source', {
             type: 'geojson',
-            data: 'http://localhost:8080/geoserver/cadastral/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cadastral%3Acombined_view&maxFeatures=50&outputFormat=application%2Fjson',
+            data: 'http://localhost:3000/api/data',
           });
 
           
