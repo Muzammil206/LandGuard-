@@ -56,7 +56,7 @@ export default function App() {
       // console.log(data[0])
 
       
-        const response = await fetch('http://localhost:3000/api/data'); // Replace with your endpoint
+        const response = await fetch('https://land-guard.vercel.app/api/data'); // Replace with your endpoint
         const data = await response.json();
     
         // Transform the data into GeoJSON FeatureCollection
@@ -221,7 +221,7 @@ export default function App() {
         if (!map.current.getSource('example-source')) {
           map.current.addSource('example-source', {
             type: 'geojson',
-            data: 'http://localhost:3000/api/data',
+            data: 'https://land-guard.vercel.app//api/data',
           });
 
           
