@@ -49,43 +49,24 @@ export default function App() {
 
 
     const fetchGeoJSON = async () => {
-      // const response = await fetch('http://localhost:3000/api/data');
       
-      // const data = await response.json();
-      // setData(data);
-      // console.log(data[0])
-
       
         const response = await fetch('https://land-guard.vercel.app/api/data'); // Replace with your endpoint
         const data = await response.json();
-    
+        console.log(data)
         // Transform the data into GeoJSON FeatureCollection
         
-      
-
     
-    
-
+  
     // Add all features from GeoJSON data to the map
     map.current.on('load', () => {
-      // Create an empty source to hold all features
+      // Create an empty ssource to hold all features
       const source = map.current.addSource('allFeaturesSource', {
         type: 'geojson',
         data: data
       });
        
       
-      if (data && data.features) {
-        
-        data.features.forEach(feature => {
-          source.push({
-            type: 'Feature',
-            geometry: feature.geometry,
-            properties: feature.properties 
-          });
-        });
-      }
-
     
 
       // Add layers for different feature types (points and polygons)
@@ -127,7 +108,7 @@ export default function App() {
         type: 'symbol',
         source: 'allFeaturesSource',
         layout: {
-          'text-field': ['get', 'pillar_num'],
+          'text-field': ['get', 'PILLAR_NUMBER'],
           'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
           'text-radial-offset': 0.5,
           'text-justify': 'auto',
@@ -141,17 +122,18 @@ export default function App() {
 
 
   map.current.on('click', 'polygonsLayer', (e) => {
+  
     new mapboxgl.Popup()
     .setLngLat(e.lngLat)
     .setHTML(`
     <div class="bg-gray-100 p-4 rounded-lg shadow-md">
-      <div class="text-lg font-bold mb-2">NAME: ${e.features[0].properties.plan_name}</div>
-      <div class="mb-2">LOCATION: <p class="text-gray-700">${e.features[0].properties.plan_locat}</p></div>
-      <div class="mb-2">LOCAL GOV: <p class="text-gray-700">${e.features[0].properties.plan_lga}</p></div>
+      <div class="text-lg font-bold mb-2">NAME: ${e.features[0].properties.PLAN_NAME}</div>
+      <div class="mb-2">LOCATION: <p class="text-gray-700">${e.features[0].properties.PLAN_LOCATION}</p></div>
+      <div class="mb-2">LOCAL GOV: <p class="text-gray-700">${e.features[0].properties.PLAN_LGA}</p></div>
       <div class="mb-2">PLAN AREA: <p class="text-gray-700">${e.features[0].properties.plan_area}</p></div>
       <div class="mb-2">PLAN ORIGIN: <p class="text-gray-700">${e.features[0].properties.plan_origi}</p></div>
-      <div class="mb-2">PLAN NUMBER: <p class="text-gray-700">${e.features[0].properties.plan_numbe}</p></div>
-      <div class="mb-2">SURVEYOR: <p class="text-gray-700">${e.features[0].properties.surveyor}</p></div>
+      <div class="mb-2">PLAN NUMBER: <p class="text-gray-700">${e.features[0].properties.PLAN_NUMBER}</p></div>
+      <div class="mb-2">SURVEYOR: <p class="text-gray-700">${e.features[0].properties.SURVEYOR}</p></div>
     </div>
   `)
   
@@ -178,30 +160,30 @@ export default function App() {
       })
     );
 
-    const draw = new MapboxDraw({
-      displayControlsDefault: false,
-      controls: {
-        polygon: true,
-        trash: true
-      },
-      // defaultMode: 'draw_polygon'
-    });
-    map.current.addControl(draw);
+    // const draw = new MapboxDraw({
+    //   displayControlsDefault: false,
+    //   controls: {
+    //     polygon: true,
+    //     trash: true
+    //   },
+    //   defaultMode: 'draw_polygon'
+    // });
+    // map.current.addControl(draw);
 
-    map.current.on('draw.create', updateArea);
-    map.current.on('draw.delete', updateArea);
-    map.current.on('draw.update', updateArea);
+    // map.current.on('draw.create', updateArea);
+    // map.current.on('draw.delete', updateArea);
+    // map.current.on('draw.update', updateArea);
 
-    function updateArea(e) {
-      const data = draw.getAll();
-      if (data.features.length > 0) {
-        const area = turf.area(data);
-        setRoundedArea(Math.round(area * 100) / 100);
-      } else {
-        setRoundedArea();
-        if (e.type !== 'draw.delete') alert('Click the map to draw a polygon.');
-      }
-    }
+    // function updateArea(e) {
+    //   const data = draw.getAll();
+    //   if (data.features.length > 0) {
+    //     const area = turf.area(data);
+    //     setRoundedArea(Math.round(area * 100) / 100);
+    //   } else {
+    //     setRoundedArea();
+    //     if (e.type !== 'draw.delete') alert('Click the map to draw a polygon.');
+    //   }
+    // }
   
 
 
@@ -221,7 +203,7 @@ export default function App() {
         if (!map.current.getSource('example-source')) {
           map.current.addSource('example-source', {
             type: 'geojson',
-            data: 'https://land-guard.vercel.app//api/data',
+            data: 'https://land-guard.vercel.app/api/data',
           });
 
           
