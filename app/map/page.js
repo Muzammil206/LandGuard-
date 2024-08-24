@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl'; 
-import Header from '../siginUp/nav';
+import Component from '../siginUp/nav';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
@@ -51,7 +51,7 @@ export default function App() {
     const fetchGeoJSON = async () => {
       
       
-        const response = await fetch('https://land-guard.vercel.app/api/data'); // Replace with your endpoint
+        const response = await fetch('http://land-guard.vercel.app/api/data'); // Replace with your endpoint
         const data = await response.json();
         console.log(data)
         // Transform the data into GeoJSON FeatureCollection
@@ -203,7 +203,7 @@ export default function App() {
         if (!map.current.getSource('example-source')) {
           map.current.addSource('example-source', {
             type: 'geojson',
-            data: 'https://land-guard.vercel.app/api/data',
+            data: 'http://land-guard.vercel.app/api/data',
           });
 
           
@@ -260,7 +260,7 @@ export default function App() {
             type: 'symbol',
             source: 'example-source',
             layout: {
-              'text-field': ['get', 'pillar_num'],
+              'text-field': ['get', 'PILLAR_NUMBER'],
               'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
               'text-radial-offset': 0.5,
               'text-justify': 'auto',
@@ -314,10 +314,10 @@ export default function App() {
 
   return (
     <div>
-      <div>
-         <Header/>
+      
+      <div className='display absolute'>
+       <Component/>
       </div>
-
       <div ref={mapContainer} className="map-container" style={{ width: '100%', height: '500px' }} />
       <div className="flex space-x-4 mt-4">
         <button
