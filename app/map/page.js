@@ -315,7 +315,7 @@ export default function App() {
   return (
     <div>
       
-      <div className='display absolute'>
+      <div className>
        <Component/>
       </div>
       <div ref={mapContainer} className="map-container" style={{ width: '100%', height: '500px' }} />
