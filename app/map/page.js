@@ -9,6 +9,7 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import * as turf from '@turf/turf';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from"@/components/ui/dropdown-menu";
 
 
 
@@ -29,7 +30,7 @@ export default function App() {
   const map = useRef(null);
   const [lng, setLng] = useState(4.474076); 
   const [lat, setLat] = useState(8.70274);
-  const [zoom, setZoom] = useState(12);
+  const [zoom, setZoom] = useState(16);
   const [data, setData] = useState(null); 
   const [roundedArea, setRoundedArea] = useState();
   const mapRef = useRef();
@@ -51,7 +52,7 @@ export default function App() {
     const fetchGeoJSON = async () => {
       
       
-        const response = await fetch('http://land-guard.vercel.app/api/data'); // Replace with your endpoint
+        const response = await fetch('http://localhost:3000/api/data'); // Replace with your endpoint
         const data = await response.json();
         console.log(data)
         // Transform the data into GeoJSON FeatureCollection
@@ -203,7 +204,7 @@ export default function App() {
         if (!map.current.getSource('example-source')) {
           map.current.addSource('example-source', {
             type: 'geojson',
-            data: 'http://land-guard.vercel.app/api/data',
+            data: 'http://localhost:3000/api/data',
           });
 
           
@@ -289,8 +290,6 @@ export default function App() {
 
 
 
-
-
         }
       });
     }
@@ -298,55 +297,48 @@ export default function App() {
 
   const handleStyleChange = (newStyle) => {
     setStyle(newStyle);
-
-
     
   };
-
-
-
-
-
-
-
 
 
 
   return (
     <div>
       
-      <div className>
+      <div >
        <Component/>
       </div>
-      <div ref={mapContainer} className="map-container" style={{ width: '100%', height: '500px' }} />
-      <div className="flex space-x-4 mt-4">
-        <button
-          onClick={() => handleStyleChange('mapbox://styles/mapbox/streets-v11')}
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none"
-        >
-          Streets
-        </button>
-        <button
-          onClick={() => handleStyleChange('mapbox://styles/mapbox/satellite-v9')}
-          className="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 focus:outline-none"
-        >
-          Satellite
-        </button>
-        <button
-          onClick={() => handleStyleChange('mapbox://styles/mapbox/outdoors-v11')}
-          className="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-md hover:bg-yellow-600 focus:outline-none"
-        >
-          Outdoors
-        </button>
-        <button
-          onClick={() => handleStyleChange('mapbox://styles/mapbox/dark-v10')}
-          className="px-4 py-2 bg-gray-800 text-white rounded-lg shadow-md hover:bg-gray-900 focus:outline-none"
-        >
-          Dark
-        </button>
-      </div>
+       <div ref={mapContainer} className="map-container " style={{ width: '100%', height: '88vh' }}>
+
+
+    <div className="flex space-x-4 mt-4 absolute z-50  bottom-20 left-12">
+      <DropdownMenu>
+        <DropdownMenuTrigger className="flex items-center px-4 py-2 bg-white text-gray-800 rounded-lg shadow-md hover:bg-gray-100 focus:outline-none">
+          <div className="w-6 h-6 mr-2">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" />
+        </svg>
+        </div>  
+          Map Style
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem onClick={() => handleStyleChange('mapbox://styles/mapbox/streets-v11')}>
+            Streets
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleStyleChange('mapbox://styles/mapbox/satellite-v9')}>
+            Satellite
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleStyleChange('mapbox://styles/mapbox/outdoors-v11')}>
+            Outdoors
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleStyleChange('mapbox://styles/mapbox/dark-v10')}>
+            Dark
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
       <div>
-        <>
+        {/* <>
       
       <div
         className="calculation-box"
@@ -372,8 +364,9 @@ export default function App() {
             </>
           )}
         </div>
+      </div> 
+    </> */}
       </div>
-    </>
       </div>
     </div>
   );
