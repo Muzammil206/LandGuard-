@@ -7,10 +7,12 @@ import Component from '../siginUp/nav';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
+
+
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import * as turf from '@turf/turf';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from"@/components/ui/dropdown-menu";
-
+import FeatureDetails from '@/components/FeatureDetails'
 
 
 
@@ -35,8 +37,19 @@ export default function App() {
   const [roundedArea, setRoundedArea] = useState();
   const mapRef = useRef();
   const mapContainerRef = useRef();
+  const [selectedFeature, setSelectedFeature] = useState(null);
   const [style, setStyle] = useState('mapbox://styles/mapbox/streets-v12');
+  const [isMobile, setIsMobile] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
+
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
   useEffect(() => {
     if (map.current) return; // Initialize map only once
 
@@ -52,7 +65,7 @@ export default function App() {
     const fetchGeoJSON = async () => {
       
       
-        const response = await fetch('http://localhost:3000/api/data'); // Replace with your endpoint
+        const response = await fetch('https://land-guard.vercel.app/api/data'); // Replace with your endpoint
         const data = await response.json();
         console.log(data)
         // Transform the data into GeoJSON FeatureCollection
@@ -67,8 +80,7 @@ export default function App() {
         data: data
       });
        
-      
-    
+
 
       // Add layers for different feature types (points and polygons)
       map.current.addLayer({
@@ -118,31 +130,38 @@ export default function App() {
       });
 
 
-// Change the cursor to a pointer when
-// the mouse is over the states layer.
-
 
   map.current.on('click', 'polygonsLayer', (e) => {
   
-    new mapboxgl.Popup()
-    .setLngLat(e.lngLat)
-    .setHTML(`
-    <div class="bg-gray-100 p-4 rounded-lg shadow-md">
-      <div class="text-lg font-bold mb-2">NAME: ${e.features[0].properties.PLAN_NAME}</div>
-      <div class="mb-2">LOCATION: <p class="text-gray-700">${e.features[0].properties.PLAN_LOCATION}</p></div>
-      <div class="mb-2">LOCAL GOV: <p class="text-gray-700">${e.features[0].properties.PLAN_LGA}</p></div>
-      <div class="mb-2">PLAN AREA: <p class="text-gray-700">${e.features[0].properties.plan_area}</p></div>
-      <div class="mb-2">PLAN ORIGIN: <p class="text-gray-700">${e.features[0].properties.plan_origi}</p></div>
-      <div class="mb-2">PLAN NUMBER: <p class="text-gray-700">${e.features[0].properties.PLAN_NUMBER}</p></div>
-      <div class="mb-2">SURVEYOR: <p class="text-gray-700">${e.features[0].properties.SURVEYOR}</p></div>
-    </div>
-  `)
-  
-    .addTo(map.current);
+     
+    
+    if (e.features && e.features.length > 0) {
+      const feature = e.features[0];
+      console.log('Feature clicked:', feature); // Debugging log
+
+      // Update the selected feature state
+      setSelectedFeature({
+        PLAN_NAME: feature.properties.PLAN_NAME || 'N/A',
+        PLAN_LOCATION: feature.properties.PLAN_LOCATION || 'N/A',
+        PLAN_LGA: feature.properties.PLAN_LGA || 'N/A',
+        PLAN_NUMBER: feature.properties.PLAN_NUMBER || 'N/A',
+        SURVEYOR: feature.properties.SURVEYOR || 'N/A',
+        plan_area: feature.properties.plan_area || 'N/A',
+        plan_origi: feature.properties.plan_origi || 'N/A',
+      });
+
+      // Open the FeatureDetails component
+      setIsOpen(true);
+
+    } else {
+      console.log('No features found at clicked location.'); // Debugging log
+      setSelectedFeature(null);
+      setIsOpen(false);
+    }
+
     });
-
-
-
+    
+  
     });
 
  }
@@ -186,8 +205,6 @@ export default function App() {
     //   }
     // }
   
-
-
   }, []);
 
 
@@ -195,33 +212,16 @@ export default function App() {
   useEffect(() => {
     if (map.current) {
 
-      
       map.current.setStyle(style);
        
-
 
          map.current.on('styledata', () => {
         if (!map.current.getSource('example-source')) {
           map.current.addSource('example-source', {
             type: 'geojson',
-            data: 'http://localhost:3000/api/data',
+            data: 'https://land-guard.vercel.app/api/data',
           });
 
-          
-         
-          if (data && data.features) {
-        
-            data.features.forEach(feature => {
-              source.push({
-                type: 'Feature',
-                geometry: feature.geometry,
-                properties: feature.properties 
-              });
-            });
-          }
-    
-        
-    
           // Add layers for different feature types (points and polygons)
           map.current.addLayer({
             id: 'pointsLaye',
@@ -271,22 +271,26 @@ export default function App() {
 
 
           map.current.on('click', 'polygonsLayer', (e) => {
-            new mapboxgl.Popup()
-            .setLngLat(e.lngLat)
-            .setHTML(`
-            <div class="bg-gray-100 p-4 rounded-lg shadow-md">
-              <div class="text-lg font-bold mb-2">NAME: ${e.features[0].properties.plan_name}</div>
-              <div class="mb-2">LOCATION: <p class="text-gray-700">${e.features[0].properties.plan_locat}</p></div>
-              <div class="mb-2">LOCAL GOV: <p class="text-gray-700">${e.features[0].properties.plan_lga}</p></div>
-              <div class="mb-2">PLAN AREA: <p class="text-gray-700">${e.features[0].properties.plan_area}</p></div>
-              <div class="mb-2">PLAN ORIGIN: <p class="text-gray-700">${e.features[0].properties.plan_origi}</p></div>
-              <div class="mb-2">PLAN NUMBER: <p class="text-gray-700">${e.features[0].properties.plan_numbe}</p></div>
-              <div class="mb-2">SURVEYOR: <p class="text-gray-700">${e.features[0].properties.surveyor}</p></div>
-            </div>
-          `)
-          
-            .addTo(map.current);
+            
+            const feature = e.features[0];
+            console.log('ade')
+            setSelectedFeature({
+              PLAN_NAME: feature.properties.PLAN_NAME,
+              PLAN_LOCATION: feature.properties.PLAN_LOCATION,
+              PLAN_LGA: feature.properties.PLAN_LGA,
+              PLAN_NUMBER: feature.properties.PLAN_NUMBER,
+              SURVEYOR: feature.properties.SURVEYOR,
+              plan_area: feature.properties.plan_area,
+              plan_origi: feature.properties.plan_origi,
             });
+            console.log( feature.properties.PLAN_NAME,)
+          });
+             
+          
+          return () => {
+            
+            if (map.current) map.current.remove();
+          };
 
 
 
@@ -307,9 +311,17 @@ export default function App() {
       
       <div >
        <Component/>
+       
       </div>
        <div ref={mapContainer} className="map-container " style={{ width: '100%', height: '88vh' }}>
-
+       {selectedFeature && (
+        
+        <FeatureDetails
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        feature={selectedFeature}
+        isMobile={isMobile} />
+      )}
 
     <div className="flex space-x-4 mt-4 absolute z-50  bottom-20 left-12">
       <DropdownMenu>
