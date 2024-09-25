@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^5.4.1",
     "@mapbox/mapbox-gl-draw": "^1.4.3",
     "@mapbox/mapbox-gl-geocoder": "^5.0.2",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -21,6 +22,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.5",
+    "framer-motion": "^11.3.31",
     "lucide-react": "^0.372.0",
     "mapbox-gl": "^3.5.2",
     "mongoose": "^8.3.3",

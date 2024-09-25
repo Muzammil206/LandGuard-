@@ -42,6 +42,9 @@ export default function Component() {
           <Link href="/" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">
             Home
           </Link>
+          <Link href="/map" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">
+            Map
+          </Link>
           <Link href="/about" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">
             About
           </Link>
@@ -83,6 +86,9 @@ export default function Component() {
           <nav className="flex flex-col space-y-2">
             <Link href="/" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">
               Home
+            </Link>
+            <Link href="/map" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">
+              Map
             </Link>
             <Link href="/about" className="text-gray-700 hover:text-blue-600 transition-colors duration-200">
               About

@@ -47,7 +47,7 @@ export default async function handler(req, res) {
             FROM 
                 "combined_view"; 
         `;
-        const { rows } = await pool.query(queryText);
+        const { rows } = await pool.query(queryText);  // "combined_view"
         
 
         // Formatting the response data as GeoJSON

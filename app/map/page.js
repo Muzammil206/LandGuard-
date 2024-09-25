@@ -3,12 +3,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl'; 
-import Component from '../siginUp/nav';
+import Component from '../siginUp[[...rest]]/nav';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
-
-
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import * as turf from '@turf/turf';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from"@/components/ui/dropdown-menu";
@@ -65,7 +63,7 @@ export default function App() {
     const fetchGeoJSON = async () => {
       
       
-        const response = await fetch('https://land-guard.vercel.app/api/data'); // Replace with your endpoint
+        const response = await fetch('https://localhost:3000/api/data'); // Replace with your endpoint
         const data = await response.json();
         console.log(data)
         // Transform the data into GeoJSON FeatureCollection
@@ -137,9 +135,7 @@ export default function App() {
     
     if (e.features && e.features.length > 0) {
       const feature = e.features[0];
-      console.log('Feature clicked:', feature); // Debugging log
-
-      // Update the selected feature state
+      
       setSelectedFeature({
         PLAN_NAME: feature.properties.PLAN_NAME || 'N/A',
         PLAN_LOCATION: feature.properties.PLAN_LOCATION || 'N/A',
@@ -149,8 +145,7 @@ export default function App() {
         plan_area: feature.properties.plan_area || 'N/A',
         plan_origi: feature.properties.plan_origi || 'N/A',
       });
-
-      // Open the FeatureDetails component
+     
       setIsOpen(true);
 
     } else {
@@ -219,7 +214,7 @@ export default function App() {
         if (!map.current.getSource('example-source')) {
           map.current.addSource('example-source', {
             type: 'geojson',
-            data: 'https://land-guard.vercel.app/api/data',
+            data: 'https://localhost:3000/api/data',
           });
 
           // Add layers for different feature types (points and polygons)
@@ -272,25 +267,33 @@ export default function App() {
 
           map.current.on('click', 'polygonsLayer', (e) => {
             
-            const feature = e.features[0];
-            console.log('ade')
-            setSelectedFeature({
-              PLAN_NAME: feature.properties.PLAN_NAME,
-              PLAN_LOCATION: feature.properties.PLAN_LOCATION,
-              PLAN_LGA: feature.properties.PLAN_LGA,
-              PLAN_NUMBER: feature.properties.PLAN_NUMBER,
-              SURVEYOR: feature.properties.SURVEYOR,
-              plan_area: feature.properties.plan_area,
-              plan_origi: feature.properties.plan_origi,
-            });
-            console.log( feature.properties.PLAN_NAME,)
-          });
              
-          
-          return () => {
-            
-            if (map.current) map.current.remove();
-          };
+    if (e.features && e.features.length > 0) {
+      const feature = e.features[0];
+      
+      setSelectedFeature({
+        PLAN_NAME: feature.properties.PLAN_NAME || 'N/A',
+        PLAN_LOCATION: feature.properties.PLAN_LOCATION || 'N/A',
+        PLAN_LGA: feature.properties.PLAN_LGA || 'N/A',
+        PLAN_NUMBER: feature.properties.PLAN_NUMBER || 'N/A',
+        SURVEYOR: feature.properties.SURVEYOR || 'N/A',
+        PLAN_AREA: feature.properties.PLAN_AREA || 'N/A',
+        PLAN_ORIGI: feature.properties.PLAN_ORIGI || 'N/A',
+      });
+     
+      setIsOpen(true);
+
+    } else {
+      console.log('No features found at clicked location.'); // Debugging log
+      setSelectedFeature(null);
+      setIsOpen(false);
+    }
+
+    });
+    
+  
+    
+
 
 
 
