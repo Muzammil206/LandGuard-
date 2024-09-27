@@ -15,9 +15,17 @@ const Hero = () => {
   
     <div className="md:relative  max-w-[85rem]  md:mx-auto  md:px-8 lg:px-8   ">
 
-    <div className="md:hidden absolute top-0 bg-hero-pattern h-screen w-screen bg-cover ">
-  
-    </div>
+<div className="absolute inset-0 bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 animate-gradient-x"></div>
+      <div className="absolute inset-0 opacity-10">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+              <path d="M 10 0 L 0 0 0 10" fill="none" stroke="black" strokeWidth="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+      </div>
     
     <div  className="hidden lg:flex  absolute  start-1/2 transform -translate-x-1/2">
       <div className="bg-gradient-to-r from-violet-300/50 to-purple-100 blur-3xl w-full h-full rotate-[-60deg] transform -translate-x-[10rem] dark:from-violet-900/50 dark:to-purple-900"></div>
@@ -29,17 +37,17 @@ const Hero = () => {
         <div className="pt-[15%] md:pt-0 ">
            <Image src={Land} alt="logo" className="hidden  md:flex md:w-16 h-16 md:justify-center md:mx-auto "/>
           <h1 className="    text-4xl  block px-6 lg:px-0 font-serif font-bold text-gray-800 sm:text-4xl lg:text-6xl lg:leading-tight">Securing Land Properties with <span className="text-blue-600">LandGuard Pro  </span></h1>
-          <p className="mt-3 text-white text-lg font-serif md:text-lg md:text-gray-800 px-6 lg:px-0">Mapping Ownership, Empowering Communities: Explore with Ease"
+          <p className="mt-3  text-lg font-serif md:text-lg text-gray-800 px-6 lg:px-0">Mapping Ownership, Empowering Communities: Explore with Ease"
           "Unlocking Land Ownership: Your Gateway to Cadastral Data" </p>
 
           {/* Buttons */}
           <div className="mt-7 grid gap-3 w-full sm:inline-flex px-6 lg:px-0">
-            <Link className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-gradient-to-tl from-blue-600 to-violet-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="/map">
+            <Link className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-gradient-to-tl from-blue-600 to-violet-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="/siginUp">
               view map 
               <svg className="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
             </Link>
-            <Link className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="/about ">
-              About us 
+            <Link className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="/login">
+              About us
             </Link>
           </div>
           {/* End Buttons */}
